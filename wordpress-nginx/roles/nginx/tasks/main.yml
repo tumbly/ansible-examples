@@ -6,6 +6,13 @@
   template: src=nginx.conf dest=/etc/nginx/nginx.conf
   notify: restart nginx
 
-- name: Copy nginx configuration for wordpress
+- name: Creating cache folder for micro-caching of wordpress
+  action: command mkdir -p /var/cache/nginx creates=/var/cache/nginx 
+
+- name: Copy nginx configuration for micro-caching of wordpress
   template: src=default.conf dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+
+- name: Copy nginx configuration for wordpress
+  template: src=wordpress.conf dest=/etc/nginx/sites-enabled/wordpress
   notify: restart nginx
